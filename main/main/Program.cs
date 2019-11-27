@@ -8,18 +8,73 @@ namespace main
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            string[] lines = textbylines();
-            var mydic = new Dictionary<string, Dictionary<string, string>>();
-            
-
+            Console.Clear();
+            while (true)
+            {
+                HandleMenu();
+                try
+                {
+                    Choose();
+                }
+                catch (KeyNotFoundException)
+                {
+                    Console.Clear();
+                    Console.WriteLine("[ERROR]: There is no such option!\n");
+                }
+            }
         }
 
-        public static string[] textbylines()
+        public static void HandleMenu()
         {
-            string[] lines = System.IO.File.ReadAllLines("movies.ini");
-            return lines;
+            List<string> options = new List<string>
+            {
+                "Get albums by genre",
+                "Get longest album",
+                "Get total albums length",
+                "Print album info",
+                "Print movies list",
+                "Export data"
+            };
+
+            for (int i = 0; i < options.Count; i++)
+                Console.WriteLine($"({i + 1}). {options[i]}");
+
+            Console.WriteLine("\n(0). Exit");
+        }
+
+        public static void Choose()
+        {
+            string option = Console.ReadLine();
+            DataManager data = new DataManager();
+            String[] table = data.Import_Data("movies.ini");
+            if (option == "0")
+                System.Environment.Exit(-1);
+            else if (option == "1")
+                Console.WriteLine("First menu");
+            else if (option == "5")
+            {
+                Console.Clear();
+                PrintAlbumsList(table);
+            }
+            else
+                throw new KeyNotFoundException();
+        }
+
+        public static void PrintAlbumsList(String[] table)
+        {
+            for (int i = 0; i < table.Length; i++)
+                Console.WriteLine(table[i]);
+        }
+    }
+
+    class DataManager
+    {
+        public String[] Import_Data(String filename)
+        {
+            return System.IO.File.ReadAllLines(filename);
         }
     }
 }
+
