@@ -49,8 +49,7 @@ namespace main
         {
             string option = Console.ReadLine();
             DataManager data = new DataManager();
-            data.Import_Data("movies.ini");
-            //String[] table = data.Import_Data("movies.ini");
+            Dictionary<string, Dictionary<string, string>> table = data.Import_Data("movies.ini");
             if (option == "0")
                 System.Environment.Exit(-1);
             else if (option == "1")
@@ -103,7 +102,7 @@ namespace main
                     Console.WriteLine(key2.Key + " " + key2.Value);
                 }
             }
-            return null;
+            return mydict;
         }
     }
 }
