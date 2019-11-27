@@ -48,7 +48,8 @@ namespace main
         {
             string option = Console.ReadLine();
             DataManager data = new DataManager();
-            String[] table = data.Import_Data("movies.ini");
+            data.Import_Data("movies.ini");
+            //String[] table = data.Import_Data("movies.ini");
             if (option == "0")
                 System.Environment.Exit(-1);
             else if (option == "1")
@@ -56,7 +57,7 @@ namespace main
             else if (option == "5")
             {
                 Console.Clear();
-                PrintAlbumsList(table);
+                //PrintAlbumsList(table);
             }
             else
                 throw new KeyNotFoundException();
@@ -67,13 +68,37 @@ namespace main
             for (int i = 0; i < table.Length; i++)
                 Console.WriteLine(table[i]);
         }
+
+        
+    
     }
 
     class DataManager
     {
-        public String[] Import_Data(String filename)
+        public Dictionary<string, Dictionary<string,string>> Import_Data(String filename)
         {
-            return System.IO.File.ReadAllLines(filename);
+            String[] table = System.IO.File.ReadAllLines(filename);
+            var mydict = new Dictionary<string, Dictionary<string, string>>();
+            string lastMovieTitle = "";
+            foreach (string lines in table)
+            {
+                if (lines.Contains("["))
+                {
+                    mydict[lines] = new Dictionary<string, string>();
+                    lastMovieTitle = lines;
+                }
+                if (lines.Contains("="))
+                {
+                    string[] parts = lines.Split('=');
+                    mydict[lastMovieTitle][parts[0]] = parts[1];
+                }
+            }
+
+            foreach(var keyValuePair in mydict)
+            {
+                Console.WriteLine(keyValuePair.Key + keyValuePair.Value + keyValuePair.Value.Values);
+            }
+            return null;
         }
     }
 }
