@@ -60,11 +60,11 @@ namespace main
 
         public static void PrintAlbumsList(Dictionary<string, Dictionary<string, string>> table)
         {
-            foreach (var keyValuePair in table)
+            foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
                 Console.WriteLine();
                 Console.WriteLine(keyValuePair.Key);
-                foreach (var key2 in keyValuePair.Value)
+                foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
                 {
                     Console.WriteLine(key2.Key + " " + key2.Value);
                 }
