@@ -24,6 +24,7 @@ namespace main
                     Console.WriteLine("[ERROR]: There is no such option!\n");
                 }
             }
+            
         }
 
         public static void HandleMenu()
@@ -96,7 +97,11 @@ namespace main
 
             foreach(var keyValuePair in mydict)
             {
-                Console.WriteLine(keyValuePair.Key + keyValuePair.Value + keyValuePair.Value.Values);
+                Console.WriteLine(keyValuePair.Key);
+                foreach (var key2 in keyValuePair.Value)
+                {
+                    Console.WriteLine(key2.Key + " " + key2.Value);
+                }
             }
             return null;
         }
