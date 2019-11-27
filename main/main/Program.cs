@@ -23,8 +23,7 @@ namespace main
                     Console.Clear();
                     Console.WriteLine("[ERROR]: There is no such option!\n");
                 }
-            }
-            
+            } 
         }
 
         public static void HandleMenu()
@@ -57,20 +56,24 @@ namespace main
             else if (option == "5")
             {
                 Console.Clear();
-                //PrintAlbumsList(table);
+                PrintAlbumsList(table);
             }
             else
                 throw new KeyNotFoundException();
         }
 
-        public static void PrintAlbumsList(String[] table)
+        public static void PrintAlbumsList(Dictionary<string, Dictionary<string, string>> table)
         {
-            for (int i = 0; i < table.Length; i++)
-                Console.WriteLine(table[i]);
+            foreach (var keyValuePair in table)
+            {
+                Console.WriteLine();
+                Console.WriteLine(keyValuePair.Key);
+                foreach (var key2 in keyValuePair.Value)
+                {
+                    Console.WriteLine(key2.Key + " " + key2.Value);
+                }
+            }
         }
-
-        
-    
     }
 
     class DataManager
@@ -91,15 +94,6 @@ namespace main
                 {
                     string[] parts = lines.Split('=');
                     mydict[lastMovieTitle][parts[0]] = parts[1];
-                }
-            }
-
-            foreach(var keyValuePair in mydict)
-            {
-                Console.WriteLine(keyValuePair.Key);
-                foreach (var key2 in keyValuePair.Value)
-                {
-                    Console.WriteLine(key2.Key + " " + key2.Value);
                 }
             }
             return mydict;
