@@ -20,7 +20,7 @@ namespace main
                     Console.Clear();
                     Console.WriteLine("[ERROR]: There is no such option!\n");
                 }
-            } 
+            }
         }
 
         public static void HandleMenu()
@@ -57,7 +57,7 @@ namespace main
             else if (option == "3")
             {
                 Console.Clear();
-                Console.WriteLine(GetTotalMoviesLenght(table)+ " mins");
+                Console.WriteLine(GetTotalMoviesLenght(table) + " mins");
             }
             else if (option == "4")
             {
@@ -87,7 +87,7 @@ namespace main
                 }
             }
         }
-        
+
         public static string GetLongestMovie(Dictionary<string, Dictionary<string, string>> table)
         {
             int maxmins = 0;
@@ -100,11 +100,11 @@ namespace main
                     {
                         string[] keyparts = key2.Value.Split(':');
                         int mins = Convert.ToInt32(keyparts[0]) * 60 + Convert.ToInt32(keyparts[1]);
-                        if(mins > maxmins)
+                        if (mins > maxmins)
                         {
                             maxmins = mins;
                             maxlenghtfilm = keyValuePair.Key;
-                        }                  
+                        }
                     }
                 }
             }
@@ -133,9 +133,9 @@ namespace main
         {
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
-                if(keyValuePair.Key == choosenTitle)
+                if (keyValuePair.Key == choosenTitle)
                 {
-                Console.WriteLine(keyValuePair.Key);
+                    Console.WriteLine(keyValuePair.Key);
                     foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
                     {
                         Console.WriteLine(key2.Key + "=" + key2.Value);
