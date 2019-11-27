@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace main
 {
@@ -30,12 +27,11 @@ namespace main
         {
             List<string> options = new List<string>
             {
-                "Get albums by genre",
-                "Get longest album",
-                "Get total albums length",
-                "Print album info",
-                "Print movies list",
-                "Export data"
+                "Get movies by genre",
+                "Get longest movie",
+                "Get total movies length",
+                "Print movie info",
+                "Print movies list"
             };
 
             for (int i = 0; i < options.Count; i++)
