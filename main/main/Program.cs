@@ -13,7 +13,14 @@ namespace main
                 HandleMenu();
                 try
                 {
-                    Choose();
+                    if (!Choose())
+                        break;
+                    else
+                    {
+                        Console.WriteLine("\nPress enter to continue.");
+                        Console.ReadLine();
+                        Console.Clear();
+                    }
                 }
                 catch (KeyNotFoundException)
                 {
@@ -40,24 +47,34 @@ namespace main
             Console.WriteLine("\n(0). Exit");
         }
 
-        public static void Choose()
+        public static bool Choose()
         {
+            Console.WriteLine("\nPlease enter a number: ");
             string option = Console.ReadLine();
             DataManager data = new DataManager();
             Dictionary<string, Dictionary<string, string>> table = data.Import_Data("movies.ini");
             if (option == "0")
+            {
                 System.Environment.Exit(-1);
+                return false;
+            }
             else if (option == "1")
-                Console.WriteLine("First menu");
+            {
+                Console.Clear();
+                GetMoviesByGenre(table);
+                return true;
+            }
             else if (option == "2")
             {
                 Console.Clear();
                 Console.WriteLine(GetLongestMovie(table));
+                return true;
             }
             else if (option == "3")
             {
                 Console.Clear();
                 Console.WriteLine(GetTotalMoviesLenght(table) + " mins");
+                return true;
             }
             else if (option == "4")
             {
@@ -65,11 +82,13 @@ namespace main
                 Console.WriteLine("Give me the title of the movie: ");
                 string choosenTitle = Console.ReadLine();
                 PrintChoosenData(table, choosenTitle);
+                return true;
             }
             else if (option == "5")
             {
                 Console.Clear();
                 PrintAlbumsList(table);
+                return true;
             }
             else
                 throw new KeyNotFoundException();
@@ -140,6 +159,21 @@ namespace main
                     {
                         Console.WriteLine(key2.Key + "=" + key2.Value);
                     }
+                }
+            }
+        }
+
+        public static void GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table)
+        {
+            Console.WriteLine("Enter a genre: ");
+            string input = Console.ReadLine();
+
+            foreach (var key in table)
+            {
+                foreach (var key2 in key.Value)
+                {
+                    if (key2.Value.Equals(input))
+                        Console.WriteLine(key.Key);
                 }
             }
         }
