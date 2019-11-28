@@ -14,6 +14,7 @@ namespace main
 
         public UI(string message, Dictionary<string, Dictionary<string, string>> result)
         {
+            Console.WriteLine($"{message}:\n");
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in result)
             {
                 Console.WriteLine();
