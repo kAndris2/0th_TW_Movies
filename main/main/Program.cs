@@ -100,6 +100,14 @@ namespace main
                 data.Export_Data(filename, AddNewMovie(table));
                 return true;
             }
+            else if (option == "7")
+            {
+                Console.Clear();
+                Console.WriteLine("Give me the name of movie to delete:");
+                string movieToDelete = Console.ReadLine();
+                data.Export_Data(filename, DeleteMovie(table, movieToDelete));
+                return true;
+            }
             else if (option == "8")
             {
                 Console.Clear();
@@ -236,6 +244,13 @@ namespace main
 
             return table;
         }
+        public static Dictionary<string, Dictionary<string, string>> DeleteMovie(Dictionary<string, Dictionary<string, string>> table, string movieToDelete)
+        {
+            movieToDelete = "[" + movieToDelete + "]";
+            table.Remove(movieToDelete);
+            return table;
+        }
+
     }
 }
 
