@@ -163,7 +163,7 @@ namespace main
             return totalmins;
         }
 
-        public static void PrintChoosenData(Dictionary<string, Dictionary<string, string>> table, string choosenTitle)
+        public static Dictionary<string, Dictionary<string, string>> PrintChoosenData(Dictionary<string, Dictionary<string, string>> table, string choosenTitle)
         {
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
@@ -172,28 +172,33 @@ namespace main
                 newkey = newkey.Replace("]", string.Empty);
                 if (newkey == choosenTitle)
                 {
-                    Console.WriteLine(keyValuePair.Key);
-                    foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
-                    {
-                        Console.WriteLine(key2.Key + "=" + key2.Value);
-                    }
+                    string key = keyValuePair.Key;
+                    key = key.Replace("[", string.Empty);
+                    key = key.Replace("]", string.Empty);
                 }
             }
+            return table;
         }
 
-        public static void GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table)
+        public static List<string> GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table)
         {
             Console.WriteLine("Enter a genre: ");
             string input = Console.ReadLine();
-
+            List<string> values = new List<string>();
             foreach (var key in table)
             {
                 foreach (var key2 in key.Value)
                 {
                     if (key2.Value.Equals(input))
-                        Console.WriteLine(key.Key);
+                    {
+                        string keys = key.Key;
+                        keys = keys.Replace("[", string.Empty);
+                        keys = keys.Replace("]", string.Empty);
+                        values.Add(keys);
+                    }
                 }
             }
+            return values;
         }
 
         public static Dictionary<string, Dictionary<string, string>> AddNewMovie(Dictionary<string, Dictionary<string, string>> table)
