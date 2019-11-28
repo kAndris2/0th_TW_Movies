@@ -69,19 +69,21 @@ namespace main
             else if (option == "1")
             {
                 Console.Clear();
-                GetMoviesByGenre(table);
+                Console.WriteLine("Give me a genre:");
+                string input = Console.ReadLine();
+                ui.UIP($"Movies by {input}", GetMoviesByGenre(table, input));
                 return true;
             }
             else if (option == "2")
             {
                 Console.Clear();
-                Console.WriteLine(GetLongestMovie(table));
+                ui.UIP("Longest Movie",GetLongestMovie(table));
                 return true;
             }
             else if (option == "3")
             {
                 Console.Clear();
-                Console.WriteLine(GetTotalMoviesLenght(table) + " mins");
+                ui.UIP("Total movies length",GetTotalMoviesLenght(table) + " mins");
                 return true;
             }
             else if (option == "4")
@@ -89,7 +91,7 @@ namespace main
                 Console.Clear();
                 Console.WriteLine("Give me the title of the movie: ");
                 string choosenTitle = Console.ReadLine();
-                PrintChoosenData(table, choosenTitle);
+                ui.UIP("The movie by your title", PrintChoosenData(table, choosenTitle));
                 return true;
             }
             else if (option == "5")
@@ -165,6 +167,8 @@ namespace main
 
         public static Dictionary<string, Dictionary<string, string>> PrintChoosenData(Dictionary<string, Dictionary<string, string>> table, string choosenTitle)
         {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            var mydict = new Dictionary<string, Dictionary<string, string>>();
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
                 string newkey = keyValuePair.Key;
@@ -172,18 +176,21 @@ namespace main
                 newkey = newkey.Replace("]", string.Empty);
                 if (newkey == choosenTitle)
                 {
-                    string key = keyValuePair.Key;
-                    key = key.Replace("[", string.Empty);
-                    key = key.Replace("]", string.Empty);
+                    foreach (var key2 in keyValuePair.Value)
+                    {
+                        dic.Add(key2.Key, key2.Value);
+                        string key = keyValuePair.Key;
+                        key = key.Replace("[", string.Empty);
+                        key = key.Replace("]", string.Empty);
+                    }
+                    mydict.Add(keyValuePair.Key, dic);
                 }
             }
-            return table;
+            return mydict;
         }
 
-        public static List<string> GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table)
+        public static List<string> GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table, string input)
         {
-            Console.WriteLine("Enter a genre: ");
-            string input = Console.ReadLine();
             List<string> values = new List<string>();
             foreach (var key in table)
             {
