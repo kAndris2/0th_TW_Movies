@@ -12,6 +12,18 @@ namespace main
                 Console.WriteLine(result[i]);
         }
 
+        public UI(string message, Dictionary<string, Dictionary<string, string>> result)
+        {
+            foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in result)
+            {
+                Console.WriteLine();
+                Console.WriteLine(keyValuePair.Key);
+
+                foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
+                    Console.WriteLine(key2.Key + ": " + key2.Value);
+            }
+        }
+
         public UI(string message, string result)
         {
             Console.WriteLine($"{message}:\n");
