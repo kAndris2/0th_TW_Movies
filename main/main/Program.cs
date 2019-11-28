@@ -22,10 +22,10 @@ namespace main
                         Console.Clear();
                     }
                 }
-                catch (KeyNotFoundException)
+                catch (KeyNotFoundException e)
                 {
                     Console.Clear();
-                    Console.WriteLine("[ERROR]: There is no such option!\n");
+                    Console.WriteLine("[ERROR]: " + e.Message);
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace main
                 return true;
             }
             else
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException($"There is no such option! ({option})\n");
         }
 
         public static string GetLongestMovie(Dictionary<string, Dictionary<string, string>> table)
