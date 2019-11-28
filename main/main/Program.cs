@@ -34,11 +34,11 @@ namespace main
         {
             List<string> options = new List<string>
             {
-                "Get movies by genre",//Andris
-                "Get longest movie",//pipa
-                "Get total movies length",//pipa
-                "Print movie info",//pipa
-                "Print movies list"//Andris
+                "Get movies by genre",
+                "Get longest movie",
+                "Get total movies length",
+                "Print movie info",
+                "Print movies list"
             };
 
             for (int i = 0; i < options.Count; i++)
@@ -152,7 +152,10 @@ namespace main
         {
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
-                if (keyValuePair.Key == choosenTitle)
+                string newkey = keyValuePair.Key;
+                newkey = newkey.Replace("[", string.Empty);
+                newkey = newkey.Replace("]", string.Empty);
+                if (newkey == choosenTitle)
                 {
                     Console.WriteLine(keyValuePair.Key);
                     foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
