@@ -54,9 +54,13 @@ namespace main
         {
             Console.WriteLine("\nPlease enter a number: ");
             string option = Console.ReadLine();
-            DataManager data = new DataManager();
             string filename = "movies.ini";
+
+            DataManager data = new DataManager();
             Dictionary<string, Dictionary<string, string>> table = data.Import_Data(filename);
+
+            UI ui = new UI();
+
             if (option == "0")
             {
                 System.Environment.Exit(-1);
@@ -91,7 +95,7 @@ namespace main
             else if (option == "5")
             {
                 Console.Clear();
-                PrintAlbumsList(table);
+                ui.UIP("Movie list", table);
                 return true;
             }
             else if (option == "6")
@@ -116,19 +120,6 @@ namespace main
             }
             else
                 throw new KeyNotFoundException();
-        }
-
-        public static void PrintAlbumsList(Dictionary<string, Dictionary<string, string>> table)
-        {
-            foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
-            {
-                Console.WriteLine();
-                Console.WriteLine(keyValuePair.Key);
-                foreach (KeyValuePair<string, string> key2 in keyValuePair.Value)
-                {
-                    Console.WriteLine(key2.Key + " " + key2.Value);
-                }
-            }
         }
 
         public static string GetLongestMovie(Dictionary<string, Dictionary<string, string>> table)

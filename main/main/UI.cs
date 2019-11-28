@@ -5,14 +5,14 @@ namespace main
 {
     public class UI
     {
-        public UI(string message, List<string> result)
+        public void UIP(string message, List<string> result)
         {
             Console.WriteLine($"{message}:\n");
             for (int i = 0; i < result.Count; i++)
                 Console.WriteLine(result[i]);
         }
 
-        public UI(string message, Dictionary<string, Dictionary<string, string>> result)
+        public void UIP(string message, Dictionary<string, Dictionary<string, string>> result)
         {
             Console.WriteLine($"{message}:\n");
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in result)
@@ -25,13 +25,13 @@ namespace main
             }
         }
 
-        public UI(string message, string result)
+        public void UIP(string message, string result)
         {
             Console.WriteLine($"{message}:\n");
             Console.WriteLine(result);
         }
 
-        public UI(string message, int result)
+        public void UIP(string message, int result)
         {
             Console.WriteLine($"{message}:\n");
             Console.WriteLine(result);
