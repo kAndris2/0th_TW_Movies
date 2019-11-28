@@ -39,7 +39,9 @@ namespace main
                 "Get total movies length",
                 "Print movie info",
                 "Print movies list",
-                "Add movie"
+                "Add movie",
+                "Remove movie",
+                "Update movie"
             };
 
             for (int i = 0; i < options.Count; i++)
@@ -96,6 +98,12 @@ namespace main
             {
                 Console.Clear();
                 data.Export_Data(filename, AddNewMovie(table));
+                return true;
+            }
+            else if (option == "8")
+            {
+                Console.Clear();
+                data.Export_Data(filename, UpdateMovie(table));
                 return true;
             }
             else
@@ -210,6 +218,21 @@ namespace main
                 inside.Add(item, Console.ReadLine());
             }
             table.Add(title, inside);
+
+            return table;
+        }
+
+        public static Dictionary<string, Dictionary<string, string>> UpdateMovie(Dictionary<string, Dictionary<string, string>> table)
+        {
+            Console.WriteLine("Enter the movie title: ");
+            string title = Console.ReadLine();
+            title = "[" + title + "]";
+
+            Console.WriteLine("Enter the movie property: ");
+            string property = Console.ReadLine();
+
+            Console.WriteLine($"Enter the new {property}: ");
+            table[title][property] = Console.ReadLine();
 
             return table;
         }
