@@ -71,7 +71,14 @@ namespace main
                 Console.Clear();
                 Console.WriteLine("Give me a genre:");
                 string input = Console.ReadLine();
-                ui.UIP($"Movies by {input}", GetMoviesByGenre(table, input));
+                try
+                {
+                    ui.UIP($"Movies by {input}", GetMoviesByGenre(table, input));
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Console.WriteLine("[ERROR]: " + e.Message);
+                }
                 return true;
             }
             else if (option == "2")
@@ -91,7 +98,14 @@ namespace main
                 Console.Clear();
                 Console.WriteLine("Give me the title of the movie: ");
                 string choosenTitle = Console.ReadLine();
-                ui.UIP("The movie by your title", PrintChoosenData(table, choosenTitle));
+                try
+                {
+                    ui.UIP("The movie by your title", PrintChoosenData(table, choosenTitle));
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Console.WriteLine("[ERROR]: " + e.Message);
+                }
                 return true;
             }
             else if (option == "5")
@@ -169,6 +183,7 @@ namespace main
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             var mydict = new Dictionary<string, Dictionary<string, string>>();
+            bool check = false;
             foreach (KeyValuePair<string, Dictionary<string, string>> keyValuePair in table)
             {
                 string newkey = keyValuePair.Key;
@@ -184,14 +199,19 @@ namespace main
                         key = key.Replace("]", string.Empty);
                     }
                     mydict.Add(keyValuePair.Key, dic);
+                    check = true;
                 }
             }
-            return mydict;
+            if (check)
+                return mydict;
+            else
+                throw new KeyNotFoundException($"Invalid title! {choosenTitle}");
         }
 
         public static List<string> GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table, string input)
         {
             List<string> values = new List<string>();
+            bool check = false;
             foreach (var key in table)
             {
                 foreach (var key2 in key.Value)
@@ -202,10 +222,14 @@ namespace main
                         keys = keys.Replace("[", string.Empty);
                         keys = keys.Replace("]", string.Empty);
                         values.Add(keys);
+                        check = true;
                     }
                 }
             }
-            return values;
+            if (check)
+                return values;
+            else
+                throw new KeyNotFoundException($"Invalid genre ({input})");
         }
 
         public static Dictionary<string, Dictionary<string, string>> AddNewMovie(Dictionary<string, Dictionary<string, string>> table)
