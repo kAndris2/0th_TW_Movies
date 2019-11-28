@@ -38,7 +38,8 @@ namespace main
                 "Get longest movie",
                 "Get total movies length",
                 "Print movie info",
-                "Print movies list"
+                "Print movies list",
+                "Add movie"
             };
 
             for (int i = 0; i < options.Count; i++)
@@ -52,7 +53,8 @@ namespace main
             Console.WriteLine("\nPlease enter a number: ");
             string option = Console.ReadLine();
             DataManager data = new DataManager();
-            Dictionary<string, Dictionary<string, string>> table = data.Import_Data("movies.ini");
+            string filename = "movies.ini";
+            Dictionary<string, Dictionary<string, string>> table = data.Import_Data(filename);
             if (option == "0")
             {
                 System.Environment.Exit(-1);
@@ -88,6 +90,12 @@ namespace main
             {
                 Console.Clear();
                 PrintAlbumsList(table);
+                return true;
+            }
+            else if (option == "6")
+            {
+                Console.Clear();
+                data.Export_Data(filename, AddNewMovie(table));
                 return true;
             }
             else
@@ -179,6 +187,31 @@ namespace main
                         Console.WriteLine(key.Key);
                 }
             }
+        }
+
+        public static Dictionary<string, Dictionary<string, string>> AddNewMovie(Dictionary<string, Dictionary<string, string>> table)
+        {
+            Console.WriteLine("Enter a title: ");
+            string title = Console.ReadLine();
+            title = "[" + title + "]";
+
+            var inside = new Dictionary<string, string>();
+            string[] options = new string[6] { "director", 
+                                                "release year", 
+                                                "stars",
+                                                "budget",
+                                                "length",
+                                                "genre" 
+                                                };
+
+            foreach (string item in options)
+            {
+                Console.WriteLine($"Enter the {item}");
+                inside.Add(item, Console.ReadLine());
+            }
+            table.Add(title, inside);
+
+            return table;
         }
     }
 }

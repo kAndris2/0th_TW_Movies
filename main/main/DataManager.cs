@@ -28,5 +28,20 @@ namespace main
             }
             return mydict;
         }
+
+        public void Export_Data(String filename, Dictionary<string, Dictionary<string, string>> table)
+        {
+            string text = "";
+
+            foreach (KeyValuePair<string, Dictionary<string, string>> key in table)
+            {
+                text += "\n" + key.Key + "\n";
+                foreach (KeyValuePair<string, string> key2 in key.Value)
+                {
+                    text += key2.Key + "=" + key2.Value + "\n";
+                }
+            }
+            System.IO.File.WriteAllText(filename, text);
+        }
     }
 }
