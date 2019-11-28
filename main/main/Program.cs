@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace main
 {
@@ -38,8 +39,7 @@ namespace main
                 "Get longest movie",
                 "Get total movies length",
                 "Print movie info",
-                "Print movies list",
-                "Add movie"
+                "Print movies list"
             };
 
             for (int i = 0; i < options.Count; i++)
@@ -90,12 +90,6 @@ namespace main
             {
                 Console.Clear();
                 PrintAlbumsList(table);
-                return true;
-            }
-            else if (option == "6")
-            {
-                Console.Clear();
-                data.Export_Data(filename, AddNewMovie(table));
                 return true;
             }
             else
@@ -188,31 +182,7 @@ namespace main
                 }
             }
         }
-
-        public static Dictionary<string, Dictionary<string, string>> AddNewMovie(Dictionary<string, Dictionary<string, string>> table)
-        {
-            Console.WriteLine("Enter a title: ");
-            string title = Console.ReadLine();
-            title = "[" + title + "]";
-
-            var inside = new Dictionary<string, string>();
-            string[] options = new string[6] { "director", 
-                                                "release year", 
-                                                "stars",
-                                                "budget",
-                                                "length",
-                                                "genre" 
-                                                };
-
-            foreach (string item in options)
-            {
-                Console.WriteLine($"Enter the {item}");
-                inside.Add(item, Console.ReadLine());
-            }
-            table.Add(title, inside);
-
-            return table;
-        }
     }
 }
+
 
