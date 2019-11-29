@@ -310,6 +310,7 @@ namespace main
         public static Dictionary<string, Dictionary<string, string>> DeleteMovie(Dictionary<string, Dictionary<string, string>> table, string movieToDelete)
         {
             bool check = false;
+            movieToDelete = "[" + movieToDelete + "]";
 
             foreach (KeyValuePair<string, Dictionary<string, string>> key in table)
                 if (key.Key.Equals(movieToDelete))
@@ -317,9 +318,7 @@ namespace main
 
             if (check)
             {
-                movieToDelete = "[" + movieToDelete + "]";
                 table.Remove(movieToDelete);
-
                 return table;
             }
             else
