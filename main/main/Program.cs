@@ -125,13 +125,27 @@ namespace main
                 Console.Clear();
                 Console.WriteLine("Give me the name of movie to delete:");
                 string movieToDelete = Console.ReadLine();
-                data.Export_Data(filename, DeleteMovie(table, movieToDelete));
+                try
+                {
+                    data.Export_Data(filename, DeleteMovie(table, movieToDelete));
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Console.WriteLine("[ERROR]: " + e.Message);
+                }
                 return true;
             }
             else if (option == "8")
             {
                 Console.Clear();
-                data.Export_Data(filename, UpdateMovie(table));
+                try
+                {
+                    data.Export_Data(filename, UpdateMovie(table));
+                }
+                catch (KeyNotFoundException e)
+                {
+                    Console.WriteLine("[ERROR]: " + e.Message);
+                }
                 return true;
             }
             else
@@ -205,7 +219,7 @@ namespace main
             if (check)
                 return mydict;
             else
-                throw new KeyNotFoundException($"Invalid title! {choosenTitle}");
+                throw new KeyNotFoundException($"Invalid title! ({choosenTitle})");
         }
 
         public static List<string> GetMoviesByGenre(Dictionary<string, Dictionary<string, string>> table, string input)
@@ -229,7 +243,7 @@ namespace main
             if (check)
                 return values;
             else
-                throw new KeyNotFoundException($"Invalid genre ({input})");
+                throw new KeyNotFoundException($"Invalid genre! ({input})");
         }
 
         public static Dictionary<string, Dictionary<string, string>> AddNewMovie(Dictionary<string, Dictionary<string, string>> table)
@@ -262,20 +276,54 @@ namespace main
             Console.WriteLine("Enter the movie title: ");
             string title = Console.ReadLine();
             title = "[" + title + "]";
+            bool[] check = new bool[2];
 
-            Console.WriteLine("Enter the movie property: ");
-            string property = Console.ReadLine();
+            foreach (KeyValuePair<string, Dictionary<string, string>> key in table)
+                if (key.Key.Equals(title))
+                    check[0] = true;
 
-            Console.WriteLine($"Enter the new {property}: ");
-            table[title][property] = Console.ReadLine();
+            if (check[0])
+            {
+                Console.WriteLine("Enter the movie property: ");
+                string property = Console.ReadLine();
 
-            return table;
+                foreach (KeyValuePair<string, Dictionary<string, string>> key in table)
+                    if (key.Key.Equals(title))
+                        foreach (KeyValuePair<string, string> key2 in key.Value)
+                            if (key2.Key.Equals(property))
+                                check[1] = true;
+
+                if (check[1])
+                {
+                    Console.WriteLine($"Enter the new {property}: ");
+                    table[title][property] = Console.ReadLine();
+                }
+                else
+                    throw new KeyNotFoundException($"Invalid movie property! ({property})");
+
+                return table;
+            }
+            else
+                throw new KeyNotFoundException($"Invalid movie title! ({title})");
         }
+
         public static Dictionary<string, Dictionary<string, string>> DeleteMovie(Dictionary<string, Dictionary<string, string>> table, string movieToDelete)
         {
-            movieToDelete = "[" + movieToDelete + "]";
-            table.Remove(movieToDelete);
-            return table;
+            bool check = false;
+
+            foreach (KeyValuePair<string, Dictionary<string, string>> key in table)
+                if (key.Key.Equals(movieToDelete))
+                    check = true;
+
+            if (check)
+            {
+                movieToDelete = "[" + movieToDelete + "]";
+                table.Remove(movieToDelete);
+
+                return table;
+            }
+            else
+                throw new KeyNotFoundException($"Invalid movie title! ({movieToDelete})");
         }
 
     }
